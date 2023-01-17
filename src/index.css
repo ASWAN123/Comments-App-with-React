@@ -1,13 +1,183 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;1,100&display=swap');
+
+body{
+  background-color: #F5F6FA;
+  font-family: "Poppins";
+  height: 1000px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+
+.container{
+  /* border: 1px solid  black; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card{
+  /* border: 1px solid yellow; */
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vote{
+  grid-area: vote;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background-color: #f5f6fa;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-top: 5px;
+  margin-bottom: 30px;
+  margin-left: 5px;
+  width: 20px;
+}
+
+.plus , .minus{
+  cursor: pointer;
+}
+
+.userinfo{
+  grid-area: userinfo;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+  /* border: 1px solid black; */
+  padding:0 5px;
+}
+.replybtn{
+  margin-left: auto;
+  cursor: pointer;
+  color: #5357b7;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.username , .replyto{
+  font-size: 16px;
+  font-weight: bold;
+}
+.replyto{
+  color: #887ec5;
+}
+
+.text1{
+  grid-area: text1;
+  /* border: 1px solid black; */
+}
+
+.profileimg{
+  height: 35px;
+  width: 35px;
+}
+.comment , .reply{
+  /* border: 1px solid gray; */
+  display: grid;
+  /* grid-template-rows: 50px 80%; */
+  grid-template-areas: 
+  "vote userinfo userinfo "
+  "vote text1 text1 ";
+  row-gap: 3px;
+  column-gap: 15px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+
+}
+
+.reply{
+  /* border: 1px solid black; */
+  margin-left: 50px;
+}
+
+.replies  {
+  border-left: 2px  dashed gray;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+
+
+.form{
+  /* border: 1px  solid black; */
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  column-gap: 15px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+.replies .form{
+  margin-left: 30px;
+}
+
+.replies .form{
+  margin-left: 45px;
+}
+
+.myinput{
+  resize: none;
+  flex : 1 ;
+  height: 90px;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid rgb(207, 201, 201);
+}
+.sendbtn{
+  background-color: #5357b7;
+  border: none;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.form .profileimg{
+  height: 40px;
+  width: 40px;
+}
+
+.you {
+  background-color:#5357b7;
+  color:#ffffff ;
+  padding: 2px 5px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.editstuff{
+  margin-left: auto;
+}
+
+.delete , .edit{
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.delete{
+  color:#d77375 ;
+}
+.edit{
+  color: #7f7fb2;
 }
