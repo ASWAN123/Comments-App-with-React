@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import { getComments , currentUser } from './components/database'
 import { useState } from 'react';
 
@@ -10,21 +10,22 @@ function App() {
   
   const addComment = ()=>{
     let newComment = {} ;
-    newComment['id'] =comments.length + 1 
+    newComment['id'] = Date.now() 
     newComment['content'] = content
     newComment['createdAt'] = '5 days ago'
     newComment['score'] = 0 
-    newComment['user'] = currentuser
-    newComment['replies'] =[]
+    newComment['user'] = currentuser 
+    newComment['replies'] =[] 
     comments.push(newComment)
     setContent("")
   }
 
   const addReply = (commentID , replyingTo , replyID)=> {
     let newReply = {} ;
+    // let's add the reply 
     setComments(comments.map((comment)=> {
       if(comment.id == commentID){
-        newReply['id'] = comment.replies.length + 1
+        newReply['id'] = Date.now()
         newReply['content'] = replycontent
         newReply['createdAt'] = '1 day ago'
         newReply['score'] = 0
@@ -34,7 +35,8 @@ function App() {
         if(comment.user['username'] !== replyingTo){
           comment.replies.unshift(newReply)
         }else{
-          comment.replies.splice(replyID, 0 , newReply)
+          // you can skill this one to append reply exactly bellow the reply
+          comment.replies.push(newReply)
         }
       }
       comment.replies.forEach((reply)=> {reply['showReplyReply']=false ;})
@@ -44,8 +46,25 @@ function App() {
     setReplycontent("")
   }
 
+  const removeComment = (commentID , replyID = 0 )=> {
+    if(replyID !== 0){
+      setComments(comments.map((comment)=>{
+        if(comment.id === commentID ){
+          let x = comment.replies.filter(obj => obj.id !== replyID);
+          comment.replies = x ;
+          return comment
+        }
+        return comment
+      }))
+    }else{
+      setComments( comments.filter(obj => obj.id !== commentID ))
+    }
+  }
 
 
+
+
+  // show reply form
   const showform = (commentID)=>{
     setComments(comments.map((comment)=> {
       let newdata = { ...comment, showCommentReply : false }
@@ -58,6 +77,7 @@ function App() {
     }))
   }
 
+  // show reply form 
   const showReplyform = (commentID , replyID )=> {
     setComments(comments.map((comment)=> {
       let newdata = { ...comment, showCommentReply : false }
@@ -90,7 +110,7 @@ function App() {
                 {comment.user['username'] === currentuser.username && <div className='you'>you</div>}
                 <span className='createddate'>{comment.createdAt}</span>
                 {comment.user['username'] !== currentuser.username && <button className="replybtn" onClick={()=>{showform(comment.id)}} >Reply</button>}
-                {comment.user['username'] === currentuser.username && <div className="editstuff"><button className='delete'>Delete</button><button className='edit'>Edit</button></div>}
+                {comment.user['username'] === currentuser.username && <div className="editstuff"><button onClick={()=>{removeComment(comment.id)}} className='delete'>Delete</button><button className='edit'>Edit</button></div>}
               </div>
               <div className='text1'>
                 <p className='content'>{comment.content}</p>
@@ -118,7 +138,7 @@ function App() {
                           {reply.user['username'] === currentuser.username && <div className='you'>you</div>}
                           <span className='createddate'>{reply.createdAt}</span>
                           {reply.user['username'] !== currentuser.username && <button className="replybtn" onClick={()=>{showReplyform(comment.id , reply.id)}} >Reply</button>}
-                          {reply.user['username'] === currentuser.username && <div className="editstuff"><button className='delete'>Delete</button><button className='edit'>Edit</button></div>}
+                          {reply.user['username'] === currentuser.username && <div className="editstuff"><button onClick={()=>{removeComment(comment.id , reply.id)}} className='delete'>Delete</button><button className='edit'>Edit</button></div>}
                         </div>
                         <div className='text1'>
                           <p className='content'><span className='replyto'>@{reply.replyingTo}</span> {reply.content}</p>
@@ -134,13 +154,7 @@ function App() {
                 
               })}
             </div>
-            {/* {comment['showCommentReply']==true &&  <div className="form">
-                  <img className='profileimg' src={currentuser.image['png']} alt="" />
-                  <textarea className='myinput' name="" id="" cols="30" value = {replycontent} onChange={(e) => {setReplycontent(e.target.value)}} rows="10" placeholder={comment.user['username']} ></textarea>
-                  <button className='sendbtn'  onClick={() => {addReply(comment.id , comment.user['username'])}} >Reply</button>
-                </div>} */}
           </div>
-          
         )
       })}
 
