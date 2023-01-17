@@ -14,14 +14,14 @@ function App() {
     newComment['content'] = content
     newComment['createdAt'] = '5 days ago'
     newComment['score'] = 0 
-    newComment['user'] = currentuser 
+    newComment['user'] = currentuser  
     newComment['replies'] =[] 
-    comments.push(newComment)
-    setContent("")
+    comments.push(newComment) 
+    setContent("") 
   }
 
   const addReply = (commentID , replyingTo , replyID)=> {
-    let newReply = {} ;
+    let newReply = {} ; 
     // let's add the reply 
     setComments(comments.map((comment)=> {
       if(comment.id == commentID){
@@ -33,7 +33,7 @@ function App() {
         newReply['replyingTo'] = replyingTo
         console.log(replyingTo)
         if(comment.user['username'] !== replyingTo){
-          comment.replies.unshift(newReply)
+          comment.replies.push(newReply)
         }else{
           // you can skill this one to append reply exactly bellow the reply
           comment.replies.push(newReply)
@@ -59,6 +59,11 @@ function App() {
     }else{
       setComments( comments.filter(obj => obj.id !== commentID ))
     }
+  }
+
+
+  const addScore = ()=> {
+    console.log('score add ')
   }
 
 
@@ -144,7 +149,7 @@ function App() {
                           <p className='content'><span className='replyto'>@{reply.replyingTo}</span> {reply.content}</p>
                         </div>
                       </div>
-                      {reply['showReplyReply']==true &&  <div key={comment.id} className="form">
+                      {reply['showReplyReply']==true &&  <div  className="form">
                         <img className='profileimg' src={currentuser.image['png']} alt="" />
                         <textarea className='myinput' name="" id="" cols="30" value = {replycontent} onChange={(e) => {setReplycontent(e.target.value)}} rows="10" placeholder={reply.user['username']} ></textarea>
                         <button className='sendbtn'  onClick={() => {addReply(comment.id , reply.user['username'])}} >Reply</button>
