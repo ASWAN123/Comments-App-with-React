@@ -40,6 +40,12 @@ body{
 
 .plus , .minus{
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  content: "−";
 }
 
 .userinfo{
@@ -137,7 +143,15 @@ body{
   border-radius: 10px;
   padding: 10px;
   border: 1px solid rgb(207, 201, 201);
+  cursor: pointer;
 }
+
+.myinput:focus {
+  outline: none ;
+  border:1px solid rgb(207, 201, 201);;
+  box-shadow: 0 0 10px #719ECE;
+}
+
 .sendbtn{
   background-color: #5357b7;
   border: none;
@@ -147,6 +161,10 @@ body{
   border-radius: 10px;
   letter-spacing: 1px;
   cursor: pointer;
+}
+
+.sendbtn:hover{
+  opacity: 0.4;
 }
 
 .form .profileimg{
@@ -173,6 +191,7 @@ body{
   font-weight: bold;
   margin-left: 15px;
   cursor: pointer;
+
 }
 
 .delete{
