@@ -9,17 +9,23 @@ body{
 
 
 .container{
-  /* border: 1px solid  black; */
+  width: 800px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
+  margin: auto;
+  padding: 10px;
+  
 }
 
 .card{
   /* border: 1px solid yellow; */
-  padding: 5px;
+  padding: 5px 0 px;
+  margin-top: 10px;
+  margin-bottom: 5px;
   display: flex;
   flex-direction: column;
+
 }
 
 .vote{
@@ -92,16 +98,19 @@ body{
   "vote userinfo userinfo "
   "vote text1 text1 ";
   row-gap: 3px;
-  column-gap: 15px;
   background-color: #ffffff;
   padding: 10px;
   border-radius: 10px;
+  box-shadow: 0 0 5px #719ECE;
 
 }
+
+
 
 .reply{
   /* border: 1px solid black; */
   margin-left: 50px;
+  margin-right: 0;
 }
 
 .replies  {
@@ -125,7 +134,9 @@ body{
   column-gap: 15px;
   background-color: #ffffff;
   border-radius: 10px;
-  margin-top: 5px;
+  margin-top: 15px;
+  /* margin-bottom: 5px; */
+  box-shadow: 0 0 5px #719ECE;
 }
 
 .replies .form{
