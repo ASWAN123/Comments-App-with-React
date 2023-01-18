@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Comments-App-with-React/static/css/main.5d8bcee2.css",
-    "main.js": "/Comments-App-with-React/static/js/main.4f7a26a0.js",
-    "static/js/787.28cb0dcd.chunk.js": "/Comments-App-with-React/static/js/787.28cb0dcd.chunk.js",
-    "index.html": "/Comments-App-with-React/index.html",
-    "main.5d8bcee2.css.map": "/Comments-App-with-React/static/css/main.5d8bcee2.css.map",
-    "main.4f7a26a0.js.map": "/Comments-App-with-React/static/js/main.4f7a26a0.js.map",
-    "787.28cb0dcd.chunk.js.map": "/Comments-App-with-React/static/js/787.28cb0dcd.chunk.js.map"
+    "main.css": "/static/css/main.cf1793a5.css",
+    "main.js": "/static/js/main.ab6f3e81.js",
+    "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "/index.html",
+    "main.cf1793a5.css.map": "/static/css/main.cf1793a5.css.map",
+    "main.ab6f3e81.js.map": "/static/js/main.ab6f3e81.js.map",
+    "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5d8bcee2.css",
-    "static/js/main.4f7a26a0.js"
+    "static/css/main.cf1793a5.css",
+    "static/js/main.ab6f3e81.js"
   ]
 }
