@@ -19,10 +19,10 @@ function App() {
     newComment['content'] = content
     newComment['createdAt'] = '5 days ago'
     newComment['score'] = 0 
-    newComment['user'] = currentuser  
-    newComment['replies'] =[] 
-    comments.push(newComment) 
-    setContent("") 
+    newComment['user'] = currentuser
+    newComment['replies'] =[]
+    comments.push(newComment)
+    setContent("")
   }
 
   return (

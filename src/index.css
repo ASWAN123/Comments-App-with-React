@@ -45,6 +45,13 @@ body{
   height: 80px;
 }
 
+.vote span{
+  font-weight: bold;
+  font-size: 16px;
+  color: #5357b7;
+
+}
+
 .plus , .minus{
   cursor: pointer;
   background-color: transparent;
@@ -53,6 +60,7 @@ body{
   font-weight: bold;
   text-align: center;
   content: "−";
+  color: rgb(137, 196, 216);
 }
 
 .userinfo{
@@ -132,6 +140,10 @@ body{
   margin-top: 10px;
 }
 
+.replies .form{
+  margin-left: 50px;
+}
+
 .editform{
   margin-top: 5px;
   grid-area: editform;
@@ -162,13 +174,6 @@ body{
   box-shadow: 0 0 5px #719ECE;
 }
 
-.replies .form{
-  margin-left: 30px;
-}
-
-.replies .form{
-  margin-left: 45px;
-}
 
 .myinput{
   resize: none;
@@ -235,26 +240,84 @@ body{
 .delete{
   display: flex;
   align-items: center;
-  color:#d77375 ;
+  color:rgb(235, 104, 104) ;
 }
 
 .edit{
   display: flex;
   align-items: center;
-  color: #7f7fb2;
+  color: #6e6ee7;
 }
 
 .delete:hover , .edit:hover{
   opacity: 0.4;
 }
 
-/* @media screen and (max-width: 374px) {
+@media screen and (max-width: 375px) {
   body {
-    background-color: olive;
+    background-color: #f4f4f4;
+  }
+
+  .content{
+    font-size: 15px;
   }
 
   .container{
-    width: 100%;
+    width: 95%;
+    margin: 0;
   }
+
+  .comment , .reply{
+    grid-template-areas: "userinfo userinfo userinfo"
+    "text1 text1 text1 "
+    "vote vote vote";
+    padding: 10px ;
+    position: relative ;
+  }
+
+  .replybtn , .editstuff{
+    position: absolute;
+    right: 1rem;
+    bottom: 1.5rem ;
+    font-size: 18px;
+  }
+
+  .reply{
+    margin: 0;
+  }
+  .replies{
+    padding: 0;
+    padding-left: 5px;
+    margin: 0;
+    border-radius: 20px;
+    margin-top: 3px;
+  }
+
+  .vote{
+    height: 30px;
+    width: 80px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0;
+  }
+
+  .myinput{
+    box-shadow: none;
+  }
+
+
+
+  .form .profileimg{grid-area: image; margin-top: 3px;}
+  .form .myinput{grid-area: input;}
+  .form .sendbtn{grid-area: sendbtn;margin-left: auto;}
+  .form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "input input "
+    "image sendbtn" ;
+    row-gap: 10px;
+  }
+
+
   
-} */
+}
