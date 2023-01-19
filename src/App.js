@@ -9,27 +9,44 @@ function App() {
   let [currentuser , setcurrentUser] = useState(currentUser)
   let [content , setContent] =  useState("")
   let [activate , setActivate] = useState(false)
+  let [removeNotiy , setRemoveNotify] = useState(['none' , 'Well done!' , 'You have successfully posted your comment.' , 'lightgreen'])
   
 
 
   // fix the textarea input should not be empty
   const addComment = ()=>{
-    let newComment = {}
-    newComment['id'] = Date.now()
-    newComment['content'] = content
-    newComment['createdAt'] = '5 days ago'
-    newComment['score'] = 0 
-    newComment['user'] = currentuser
-    newComment['replies'] =[]
-    comments.push(newComment)
-    setContent("")
+    if(content !== ""){
+      let newComment = {}
+      newComment['id'] = Date.now()
+      newComment['content'] = content
+      newComment['createdAt'] = '5 days ago'
+      newComment['score'] = 0 
+      newComment['user'] = currentuser
+      newComment['replies'] =[]
+      comments.push(newComment)
+      setContent("")
+      setRemoveNotify(['block' , 'Well done!' , 'You have successfully posted your comment.' , 'lightgreen'])
+      setTimeout(() =>{
+        setRemoveNotify(['none'])
+      }, 3000)
+    }else{
+      setRemoveNotify(['block' , 'what are you trying todo !' , 'You can not post empty comment.' , 'lightgreen'])
+      setTimeout(() =>{
+        setRemoveNotify(['none'])
+      }, 3000)
   }
+  }
+
+
 
   return (
     <div className="container">
+      {/* notification div */}
+      <div className='notification' style={{display: removeNotiy[0], backgroundColor:removeNotiy[3]}} ><span>{removeNotiy[1]}</span> {removeNotiy[2]}</div>
+
       {comments.map((comment) => {
         return (
-          <Comment comment={comment} key={comment.id} currentuser = {currentuser} setContent={setContent} setComments={setComments} comments={comments} setActivate = {setActivate}  content={content}   />
+          <Comment setRemoveNotify={setRemoveNotify} comment={comment} key={comment.id} currentuser = {currentuser} setContent={setContent} setComments={setComments} comments={comments} setActivate = {setActivate}  content={content}   />
         )
       })}
 
@@ -41,8 +58,11 @@ function App() {
           if(content.length>0){
             addComment()
           }else{
-            console.log('you can not have empty comment')
-          }
+            setRemoveNotify(['block' , 'OOPSS ! ' , 'You can not post empty comment.' , 'yellow'])
+            setTimeout(() =>{
+              setRemoveNotify(['none'])
+            }, 3000)
+        }
         }} >SEND</button>
       </div>
     </div>

@@ -3,7 +3,7 @@ import {useState} from 'react'
 import {  BsFillReplyFill} from 'react-icons/bs';
 import {  AiFillDelete , AiTwotoneEdit} from 'react-icons/ai';
 function Reply(props) {
-  
+
     let reply = props.reply ;
     let setComments = props.setComments ;
     let comments = props.comments ;
@@ -13,6 +13,7 @@ function Reply(props) {
     let setActivate = props.setActivate ;
     let [editmode , setEditmode] = useState([false , 0 ]) ;
     let activate1 = props.activate1 ;
+    let setRemoveNotify = props.setRemoveNotify ;
 
     const addScore = (commentID , target , replyID )=> {
         setComments(comments.map((comment)=>{
@@ -27,6 +28,17 @@ function Reply(props) {
           }
           return comment
         }))
+
+        let replyownedby = comments[commentID-1]['replies'][replyID-1]['user']['username']
+        if(replyownedby !== currentuser['username'] ){
+          setRemoveNotify(['block' , replyownedby , ' appreciate the time you took to share your feedback' , 'yellow'])
+          setTimeout(() =>{
+            setRemoveNotify(['none'])
+          }, 3000)
+        }else{
+          console.log('get your self  a  coffee')
+        }
+
     }
 
     
@@ -39,6 +51,10 @@ function Reply(props) {
         }
         return comment
         }))
+        setRemoveNotify(['block' , 'Deleted !' , 'You have successfully removed your reply.' , 'rgb(235, 104, 104)'])
+        setTimeout(() =>{
+          setRemoveNotify(['none'])
+        }, 3000)
     }
 
     const showReplyform = (commentID , replyID )=> {
@@ -62,6 +78,7 @@ function Reply(props) {
     }
 
     const update = (commentID, replyID)=> {
+      if(replycontent !== ""){
       setComments(comments.map((comment)=> {
         if(comment.id == commentID){
 
@@ -80,6 +97,12 @@ function Reply(props) {
       }))
       setEditmode([false , 0 , 0 ])
       setReplycontent('')
+      setRemoveNotify(['block' , 'Updated!' , 'You have successfully updated your reply.' , '#6e6ee7'])
+      setTimeout(() =>{
+        setRemoveNotify(['none'])
+      }, 3000)
+      }
+      
     }
 
 
@@ -96,6 +119,10 @@ function Reply(props) {
           return comment
         }))
         setReplycontent("")
+        setRemoveNotify(['block' , 'Well done!' , 'You have successfully posted your reply.' , 'lightgreen'])
+        setTimeout(() =>{
+          setRemoveNotify(['none'])
+        }, 3000)
     }
 
     useEffect(()=>{
@@ -133,7 +160,10 @@ function Reply(props) {
                     if(replycontent.length>0){
                         update(comment.id , reply.id)
                     }else{
-                        console.log('you can not add empty reply')
+                      setRemoveNotify(['block' , 'OOPSS ! ' , 'You can not post empty comment.' , 'yellow'])
+                      setTimeout(() =>{
+                        setRemoveNotify(['none'])
+                      }, 3000)
                     }
                     }} >update</button> </div>}
                     { (editmode[1] !== comment.id && editmode[2] !== reply.id) && <p className='content'><span className='replyto'>@{reply.replyingTo}</span> {reply.content}</p> }
@@ -148,7 +178,10 @@ function Reply(props) {
                     if(replycontent.length>0) {
                         addReply(comment.id , reply.user['username'])
                     }else{
-                        console.log('you can not add empty reply')
+                      setRemoveNotify(['block' , 'OOPSS ! ' , 'You can not post empty comment.' , 'yellow'])
+                      setTimeout(() =>{
+                        setRemoveNotify(['none'])
+                      }, 3000)
                     }
                     }} >Reply</button>
             </div>}

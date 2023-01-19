@@ -4,6 +4,7 @@ import { useState } from 'react';
 import {  BsFillReplyFill} from 'react-icons/bs';
 import {  AiFillDelete , AiTwotoneEdit} from 'react-icons/ai';
 
+
 function Comment(props) {
     let comment = props.comment ;
     let currentuser = props.currentuser ;
@@ -14,22 +15,34 @@ function Comment(props) {
     let content = props.content ;
     let [activate1 , setActivate1] = useState(false) ;
     let [editmode , setEditmode] = useState([false , 0 ]) ;
+    let setRemoveNotify = props.setRemoveNotify ;
+
 
     const removeComment = (commentID)=> {
         setComments( comments.filter(obj => obj.id !== commentID ))
+        setRemoveNotify(['block' , 'Deleted !' , 'You have successfully removed your comment.' , 'rgb(235, 104, 104)'])
+        setTimeout(() =>{
+          setRemoveNotify(['none'])
+        }, 3000)
     }
 
     const addReply = (commentID , replyingTo )=> {
-        setComments(comments.map((comment)=> {
-          if(comment.id == commentID){
-            let newReply ={'id':Date.now(),'content':replycontent ,'createdAt':'1 day ago' ,'score': 0 ,'user':currentuser ,'replyingTo':replyingTo ,'showReplyReply': false }
-            comment.replies.push(newReply)
-          }
-          comment.replies.forEach((reply)=> {reply['showReplyReply']=false ;})
-          comment['showCommentReply'] = false
-          return comment
-        }))
-        setReplycontent("")
+        if(replycontent !== ""){
+            setComments(comments.map((comment)=> {
+            if(comment.id == commentID){
+                let newReply ={'id':Date.now(),'content':replycontent ,'createdAt':'1 day ago' ,'score': 0 ,'user':currentuser ,'replyingTo':replyingTo ,'showReplyReply': false }
+                comment.replies.push(newReply)
+            }
+            comment.replies.forEach((reply)=> {reply['showReplyReply']=false ;})
+            comment['showCommentReply'] = false
+            return comment
+            }))
+            setReplycontent("")
+            setRemoveNotify(['block' , 'Well done!' , 'You have successfully posted your reply.' , 'lightgreen'])
+            setTimeout(() =>{
+              setRemoveNotify(['none'])
+            }, 3000)
+        }
     }
 
 
@@ -38,10 +51,22 @@ function Comment(props) {
         setComments(comments.map((comment)=>{
           if(comment.id === commentID){
               (target ==='-') ? comment.score -= 1 : comment.score+=1 ;
+              let replyownedby = comment['user']['username']
+              if(replyownedby !== currentuser['username'] ){
+                setRemoveNotify(['block' , replyownedby  , ' appreciate the time you took to share your feedback' , 'yellow'])
+                setTimeout(() =>{
+                  setRemoveNotify(['none'])
+                }, 3000)
+              }else{
+                console.log('get your self  a  coffee')
+              }
             return comment
           }
+          
           return comment
         }))
+
+
       }
 
     const showReplyform = (commentID )=> {
@@ -80,17 +105,21 @@ function Comment(props) {
     }
 
     const update = (commentID)=> {
-        setComments(comments.map((comment) => {
-            if(comment.id === commentID){
-                comment.content = replycontent ;
+        if(replycontent !== ""){
+            setComments(comments.map((comment) => {
+                if(comment.id === commentID){
+                    comment.content = replycontent ;
+                    return comment
+                }
                 return comment
-            }
-            return comment
-        }))
-        setEditmode([false , 0])
-        setReplycontent('')
-
-
+            }))
+            setEditmode([false , 0])
+            setReplycontent('')
+            setRemoveNotify(['block' , 'Updated!' , 'You have successfully updated your comment.' , '#6e6ee7'])
+            setTimeout(() =>{
+              setRemoveNotify(['none'])
+            }, 3000)
+        }
     }
 
 
@@ -117,7 +146,10 @@ function Comment(props) {
                     if(replycontent.length>0){
                         update(comment.id)
                     }else{
-                        console.log('you can not add empty reply')
+                        setRemoveNotify(['block' , 'OOPSS ! ' , 'You can not post empty comment.' , 'yellow'])
+                        setTimeout(() =>{
+                          setRemoveNotify(['none'])
+                        }, 3000)
                     }
                     }} >update</button> </div>}
                     {editmode[1] !== comment.id  && <p className='content'>{comment.content}</p>}
@@ -130,7 +162,10 @@ function Comment(props) {
                     if(replycontent.length>0){
                         addReply(comment.id , comment.user['username'])
                     }else{
-                        console.log('you can not add empty reply')
+                        setRemoveNotify(['block' , 'OOPSS ! ' , 'You can not post empty comment.' , 'yellow'])
+                        setTimeout(() =>{
+                          setRemoveNotify(['none'])
+                        }, 3000)
                     }
                     }} >Reply</button>
             </div>}
@@ -138,7 +173,7 @@ function Comment(props) {
             <div className='replies'>
             {comment.replies.map((reply)=> {
                 return (
-                    <Reply key={reply.id}  setActivate = {setActivate} reply = {reply} comments= {comments} setComments={setComments} comment={comment} currentuser={currentuser}/>
+                    <Reply key={reply.id}  setRemoveNotify={setRemoveNotify} setActivate = {setActivate} reply = {reply} comments= {comments} setComments={setComments} comment={comment} currentuser={currentuser}/>
                 )
             })}
             </div>
