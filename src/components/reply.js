@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import {useState} from 'react'
-
+import {  BsFillReplyFill} from 'react-icons/bs';
+import {  AiFillDelete , AiTwotoneEdit} from 'react-icons/ai';
 function Reply(props) {
+  
     let reply = props.reply ;
     let setComments = props.setComments ;
     let comments = props.comments ;
@@ -9,12 +11,12 @@ function Reply(props) {
     let comment = props.comment ;
     let [replycontent , setReplycontent] =  useState("") ;
     let setActivate = props.setActivate ;
+    let [editmode , setEditmode] = useState([false , 0 ]) ;
+    let activate1 = props.activate1 ;
 
     const addScore = (commentID , target , replyID )=> {
-        console.log(comments , 'comments')
         setComments(comments.map((comment)=>{
           if(comment.id === commentID){
-            console.log(comment)
               comment.replies.map((reply)=>{
                 if(reply.id === replyID){
                   (target ==='-') ? reply.score -= 1 : reply.score+=1 ;
@@ -54,6 +56,32 @@ function Reply(props) {
           }))
     }
 
+    const editComment = (commentID ,replyID , replyContent) => {
+      setEditmode([true , commentID , replyID])
+      setReplycontent(replyContent)
+    }
+
+    const update = (commentID, replyID)=> {
+      setComments(comments.map((comment)=> {
+        if(comment.id == commentID){
+
+          let x =  comment.replies.map((reply)=> {
+            if(reply.id == replyID){
+              reply.content = replycontent ;
+              return reply
+            }
+            return reply
+          })
+
+          comment.replies = x
+          return comment
+        }
+        return comment
+      }))
+      setEditmode([false , 0 , 0 ])
+      setReplycontent('')
+    }
+
 
 
     const addReply = (commentID , replyingTo )=> {
@@ -71,7 +99,7 @@ function Reply(props) {
     }
 
     useEffect(()=>{
-        if(replycontent.length !== 0){
+        if(replycontent.length > 0){
             setActivate(true)
         }else{
             setActivate(false)
@@ -91,17 +119,38 @@ function Reply(props) {
                     <span className='username'>{reply.user['username']}</span>
                     {reply.user['username'] === currentuser.username && <div className='you'>you</div>}
                     <span className='createddate'>{reply.createdAt}</span>
-                    {reply.user['username'] !== currentuser.username && <button className="replybtn" onClick={()=>{showReplyform(comment.id , reply.id)}} >Reply</button>}
-                    {reply.user['username'] === currentuser.username && <div className="editstuff"><button onClick={()=>{removeComment(comment.id , reply.id)}} className='delete'>Delete</button><button className='edit'>Edit</button></div>}
+                    {reply.user['username'] !== currentuser.username && <button className="replybtn" onClick={()=>{showReplyform(comment.id , reply.id)}} ><BsFillReplyFill/>Reply</button>}
+                    {reply.user['username'] === currentuser.username && <div className="editstuff"><button onClick={()=>{removeComment(comment.id , reply.id)}} className='delete'><AiFillDelete />Delete</button>
+
+                    <button onClick={()=>{editComment(comment.id , reply.id , reply.content)}} className='edit'><AiTwotoneEdit />Edit</button></div>}
                 </div>
+                {/* i am working here */}
+
                 <div className='text1'>
-                    <p className='content'><span className='replyto'>@{reply.replyingTo}</span> {reply.content}</p>
+                { editmode[0] === true &&  editmode[2] === reply.id && <div className='editform'><textarea className='myinput' disabled={activate1} name="" id="" cols="30" value = {"@"+reply.replyingTo+", "+replycontent} onChange={(e) => {setReplycontent(e.target.value.replace("@"+reply.replyingTo+", " ,''))}} rows="10" placeholder={'@'+reply.user['username']} ></textarea>  
+                
+                <button className='sendbtn'  disabled={activate1} onClick={() => {
+                    if(replycontent.length>0){
+                        update(comment.id , reply.id)
+                    }else{
+                        console.log('you can not add empty reply')
+                    }
+                    }} >update</button> </div>}
+                    { (editmode[1] !== comment.id && editmode[2] !== reply.id) && <p className='content'><span className='replyto'>@{reply.replyingTo}</span> {reply.content}</p> }
+                    
                 </div>
+
             </div>
             { reply['showReplyReply']==true &&  <div  className="form">
                 <img className='profileimg' src={currentuser.image['png']} alt="" />
                 <textarea className='myinput' name="" id="" cols="30" value = {replycontent} onChange={(e) => {setReplycontent(e.target.value)}} rows="10" placeholder={reply.user['username']} ></textarea>
-                <button className='sendbtn'  onClick={() => {addReply(comment.id , reply.user['username'])}} >Reply</button>
+                <button className='sendbtn'  onClick={() => {
+                    if(replycontent.length>0) {
+                        addReply(comment.id , reply.user['username'])
+                    }else{
+                        console.log('you can not add empty reply')
+                    }
+                    }} >Reply</button>
             </div>}
         </div>
     )

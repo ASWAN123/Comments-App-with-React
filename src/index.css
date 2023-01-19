@@ -42,6 +42,7 @@ body{
   margin-bottom: 30px;
   margin-left: 5px;
   width: 20px;
+  height: 80px;
 }
 
 .plus , .minus{
@@ -89,23 +90,32 @@ body{
 .profileimg{
   height: 35px;
   width: 35px;
+  /* border: 1px solid black; */
+  border-radius: 20px;
 }
 .comment , .reply{
   /* border: 1px solid gray; */
   display: grid;
-  /* grid-template-rows: 50px 80%; */
+  grid-template-columns: 50px 1fr 1fr;
   grid-template-areas: 
   "vote userinfo userinfo "
-  "vote text1 text1 ";
+  "vote text1 text1 "
+   "vote editform editform";
   row-gap: 3px;
+  column-gap: 10px;
   background-color: #ffffff;
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 0 5px #719ECE;
+  box-shadow: 0 0 3px #719ECE;
 
 }
+.comment:hover , .reply:hover{
+  box-shadow: 0 0 10px #719ECE;
+}
 
-
+.form:hover{
+  box-shadow: 0 0 10px #719ECE;
+}
 
 .reply{
   /* border: 1px solid black; */
@@ -122,7 +132,20 @@ body{
   margin-top: 10px;
 }
 
+.editform{
+  margin-top: 5px;
+  grid-area: editform;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
 
+
+.editform .sendbtn{
+  margin-left: auto;
+}
 
 .form{
   /* border: 1px  solid black; */
@@ -168,13 +191,15 @@ body{
   border: none;
   color: #ffffff;
   font-size: 20px;
-  padding: 10px 20px;
+  height: 50px;
+  width: 100px;
   border-radius: 10px;
   letter-spacing: 1px;
   cursor: pointer;
+  text-transform: uppercase ;
 }
 
-.sendbtn:hover{
+.sendbtn:hover , .replybtn:hover{
   opacity: 0.4;
 }
 
@@ -193,6 +218,8 @@ body{
 
 .editstuff{
   margin-left: auto;
+  display: flex;
+  align-items: center;
 }
 
 .delete , .edit{
@@ -206,8 +233,28 @@ body{
 }
 
 .delete{
+  display: flex;
+  align-items: center;
   color:#d77375 ;
 }
+
 .edit{
+  display: flex;
+  align-items: center;
   color: #7f7fb2;
 }
+
+.delete:hover , .edit:hover{
+  opacity: 0.4;
+}
+
+/* @media screen and (max-width: 374px) {
+  body {
+    background-color: olive;
+  }
+
+  .container{
+    width: 100%;
+  }
+  
+} */

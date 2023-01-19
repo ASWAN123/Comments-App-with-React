@@ -1,13 +1,15 @@
 
 import { getComments , currentUser } from './components/database'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Comment from './components/comment';
+
 function App() {
   let data = getComments() ;
   let [comments , setComments] = useState(data)
   let [currentuser , setcurrentUser] = useState(currentUser)
   let [content , setContent] =  useState("")
   let [activate , setActivate] = useState(false)
+  
 
 
   // fix the textarea input should not be empty
@@ -27,7 +29,7 @@ function App() {
     <div className="container">
       {comments.map((comment) => {
         return (
-          <Comment comment={comment} key={comment.id} currentuser = {currentuser} setContent={setContent} setComments={setComments} comments={comments} setActivate = {setActivate} />
+          <Comment comment={comment} key={comment.id} currentuser = {currentuser} setContent={setContent} setComments={setComments} comments={comments} setActivate = {setActivate}  content={content}   />
         )
       })}
 
@@ -35,7 +37,13 @@ function App() {
       <div className="form" disabled={activate}  >
         <img className='profileimg' src={currentuser.image['png']} alt="" />
         <textarea disabled={activate} className='myinput' name="" id="" cols="30" value = {content} onChange={(e) => {setContent(e.target.value)}} rows="10" placeholder='Add a comment ...' ></textarea>
-        <button className='sendbtn' disabled={activate} onClick={addComment} >SEND</button>
+        <button className='sendbtn' disabled={activate} onClick={()=>{
+          if(content.length>0){
+            addComment()
+          }else{
+            console.log('you can not have empty comment')
+          }
+        }} >SEND</button>
       </div>
     </div>
     )
